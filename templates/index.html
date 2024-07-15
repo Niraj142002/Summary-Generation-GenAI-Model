@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary Generation AI Model</title>
+    <!-- <link rel="stylesheet" href="./styles.css"> -->
+    <style>body {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f0f0f5;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    
+    .container {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 80%;
+        max-width: 600px;
+    }
+    
+    h1 {
+        margin-bottom: 20px;
+        font-size: 2em;
+        color: #333;
+    }
+    
+    textarea {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        resize: none;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    button {
+        padding: 15px 30px;
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    h2 {
+        margin-top: 30px;
+        font-size: 1.5em;
+        color: #333;
+    }
+    
+    #summary {
+        background-color: #f7f7f7;
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 16px;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Match Summarizer</h1>
+        <textarea id="inputText" rows="10" cols="50" placeholder="Enter text here..."></textarea>
+        <button onclick="summarizeText()">Summarize</button>
+        <h2>Summary:</h2>
+        <p id="summary"></p>
+    </div>
+
+    <script>
+        function summarizeText() {
+            const text = document.getElementById('inputText').value;
+
+            fetch('/summarize', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: text }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('summary').innerText = data.summary;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
